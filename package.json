@@ -1,0 +1,36 @@
+{
+  "name": "jsondiffpatch-cli",
+  "version": "0.1.1",
+  "description": "A command line wrapper for jsondiffpatch",
+  "main": "index.js",
+  "bin": {
+    "jsondiffpatch-cli": "./bin/jsondiffpatch-cli"
+  },
+  "dependencies": {
+    "jsondiffpatch": "^0.3.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jsondiffpatch-cli diff samples/left.json samples/right.json left-right.diff.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valencianok/jsondiffpatch-cli.git"
+  },
+  "keywords": [
+    "json",
+    "diff",
+    "patch",
+    "jsondiffpatch",
+    "deltas",
+    "command-line",
+    "cli",
+    "cmd"
+  ],
+  "author": "Kenneth Valenciano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valencianok/jsondiffpatch-cli/issues"
+  },
+  "homepage": "https://github.com/valencianok/jsondiffpatch-cli#readme"
+}
