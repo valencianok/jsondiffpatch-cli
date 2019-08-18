@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+const jsondiffpatch = require('jsondiffpatch');
+
+const fs = require('fs');
+
+const operation = process.argv[2];
+const fileLeft = process.argv[3];
+const fileRight = process.argv[4];
+const outputFile = process.argv[5];
+
+if (!operation || !fileLeft || !fileRight) {
+  console.log('\n USAGE:');
+  console.log(' - DIFF:    jsondiffpatch-cli diff    left.json   right.json   [OUTPUT_PATCH_FILE.json]');
+  console.log(' - PATCH:   jsondiffpatch-cli patch   left.json   patch.json   [OUTPUT_FILE.json]');
+  console.log(' - UNPATCH: jsondiffpatch-cli unpatch right.json  patch.json   [OUTPUT_FILE.json]');
+  return;
+}
+
+switch (operation) {
+  case "diff":
+    var left = JSON.parse(fs.readFileSync(fileLeft));
+    var right = JSON.parse(fs.readFileSync(fileRight));
+    const delta = jsondiffpatch.diff(left, right);
+    if (outputFile)
+      fs.writeFileSync(outputFile, JSON.stringify(delta));
+    else
+      console.log(delta);
+    break;
+  case "patch":
+    var left = JSON.parse(fs.readFileSync(fileLeft));
+    var patch = JSON.parse(fs.readFileSync(fileRight));
+    jsondiffpatch.patch(left, patch);
+    if (outputFile)
+      fs.writeFileSync(outputFile, JSON.stringify(left));
+    else
+      console.log(left);
+    break;
+  case "unpatch":
+    var right = JSON.parse(fs.readFileSync(fileLeft));
+    var patch = JSON.parse(fs.readFileSync(fileRight));
+    jsondiffpatch.unpatch(right, patch);
+    if (outputFile)
+      fs.writeFileSync(outputFile, JSON.stringify(right));
+    else
+      console.log(right);
+    break;
+  default:
+    console.log('Not a valid operation. Use diff/patch/unpatch');
+    break;
+}
